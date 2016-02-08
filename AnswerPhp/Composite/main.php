@@ -31,9 +31,7 @@ $engineeringDir->add($enDir1);
 $enFile2 = new File('enFile2', 1536);
 $enDir1->add($enFile2);
 
-$rootDir->printList();
-
-
+$rootDir->printList('');
 
 
 abstract class Entry{
@@ -45,7 +43,7 @@ abstract class Entry{
 		throw New RuntimeException(__METHOD__ . 'このメソッドの呼び出しは禁止されています。');
 	}
 	
-	abstract public function printList();
+	abstract public function printList($prefix);
 }
 
 class File extends Entry{
@@ -65,9 +63,9 @@ class File extends Entry{
 		return $this->size;
 	}
 	
-	public function printList(){
-		echo '/' . $this->name . PHP_EOL;
-		echo $this->size . PHP_EOL;
+	public function printList($prefix){
+		$output =  $prefix. '/' . $this->name . ' ' . $this->size . PHP_EOL;
+		echo nl2br($output);
 	}	
 }
 
@@ -100,15 +98,14 @@ class Directory extends Entry{
 		$this->directory[] = $entry;
 	}
 	
-	public function printList(){
-		//TODO引数prefixを取るようにして、親ディレクトリの内容も表示するようにする。
-		//TODOそれと、ディレクトリとサイズはまとめて1行で表示しましょう。
-		echo '/' . $this->name . PHP_EOL;
-		echo $this->getSize() . PHP_EOL;
-		if(empty($this->directory)) return;//ここで再帰を止める
+	public function printList($prefix){
+		$output = $prefix . '/' . $this->name . ' ' . $this->getSize() . PHP_EOL;
+		echo nl2br($output);
+		
+		if(empty($this->directory)) return;					//再帰は必ずストッパを！
+		
 		foreach($this->directory as $entry){
-			echo '/' . $this->name;
-			$entry->printList();
+			$entry->printList($prefix . '/' . $this->name);	//再帰で親の情報を渡したい時は引数！
 		}
 	}	
 }
