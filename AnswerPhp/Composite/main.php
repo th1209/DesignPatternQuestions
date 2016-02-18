@@ -50,8 +50,7 @@ class File extends Entry{
 	public $name;
 	public $size;
 	
-	public function __construct($name, $size) {
-		$this->name = $name;
+	public function __construct($name, $size) {$this->name = $name;
 		$this->size = $size;
 	}
 	
@@ -107,6 +106,6 @@ class Directory extends Entry{
 		foreach($this->directory as $entry){
 			$entry->printList($prefix . '/' . $this->name);	//再帰で親の情報を渡したい時は引数！
 		}
-	}	
+	}
 }
 
