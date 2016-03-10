@@ -10,7 +10,7 @@ $special->setNext($odd)->setNext($noSupport)->setNext($limit);
 
 for($i =0; $i < 100; $i++){
 	$trouble= new Trouble(rand(1,100));
-	$special->resolve($trouble);
+	$special->support($trouble);
 }
 
 
@@ -34,6 +34,7 @@ abstract class Support{
 	
 	public function __construct($name){
 		$this->name = $name;
+		$this->next = null;
 	}
 	
 	public function getName() {
@@ -46,6 +47,18 @@ abstract class Support{
 		return $support;
 	}
 	
+	public function support(Trouble $trouble){
+		for($support = $this; true; $support = $support->next){	//trueなので無限ループ
+			if($support->resolve($trouble)){
+				$support->done($trouble);
+				break;
+			}else if($support->next === null){
+				$support->fail($trouble);
+				break;
+			}
+		}
+	}
+	
 	abstract public function resolve (Trouble $trouble);
 	
 	public function done(Trouble $trouble) {
@@ -54,14 +67,6 @@ abstract class Support{
 	
 	public function fail(Trouble $trouble) {
 		echo $trouble->getNumber() . ' can\'t resolve by chain of responsibility. ' . $this->getName() . PHP_EOL;
-	}
-	public function throwTroubleToNext($trouble){
-		if(isset($this->next)){
-			$this->next->resolve($trouble);
-		//解決できるConcreteHandlerがいなかった
-		}else{
-			$this->fail($trouble);
-		}
 	}
 }
 class LimitSupport extends Support{
@@ -73,23 +78,16 @@ class LimitSupport extends Support{
 	}
 	
 	public function resolve (Trouble $trouble){
-		//このConcreteHandlerで解決できる
-		if($trouble->getNumber()< $this->limitNumber){
-			$this->done($trouble);
-		}
-		//次のConcreteHandlerにたらい回す
-		$this->throwTroubleToNext($trouble);
+		return ($trouble->getNumber()< $this->limitNumber) ? true : false;
 	}
 }
+
 class OddSupport extends Support{
 	public function resolve (Trouble $trouble){
-		//TODO この箇所、判定箇所だけが特化してるから、上手く切り出したい
-		if(($trouble->getNumber() / 2) !== 0){
-			$this->done($trouble);
-		}
-		$this->throwTroubleToNext($trouble);
+		return (($trouble->getNumber() % 2) !== 0)  ? true : false;
 	}
 }
+
 class SpecialSupport extends Support{
 	private $specialNumber;
 	
@@ -98,15 +96,12 @@ class SpecialSupport extends Support{
 		$this->specialNumber = $specialNumber;
 	}
 	public function resolve (Trouble $trouble){
-		if($trouble->getNumber() === $this->specialNumber){
-			$this->done($trouble);
-		}
-		$this->throwTroubleToNext($trouble);
+		return ($trouble->getNumber() === $this->specialNumber)  ? true : false;
 	}
 }
+
 class NoSupport extends Support{
 	public function resolve (Trouble $trouble){
-		//必ず次のConcreteHandlerにたらい回す
-		$this->throwTroubleToNext($trouble);
+		return false;
 	}
 }

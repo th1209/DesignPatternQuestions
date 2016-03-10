@@ -1,9 +1,18 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//以下、メインルーチン
+//テストルーチン
+$safeFrame = new SafeFrame();
+$safeFrame->setClock('12:00:00');
+actionFacade($safeFrame);
 
 
+function actionFacade(SafeFrame $safeFrame){
+	$safeFrame->actionPerformed(1);
+}
+
+
+//クラス定義
 //MEMO 時間は H:i:s 形式の文字列で扱う
 //     例えば、12:00:00といった感じ。
 //     正規表現なんかでフォーマットチェックしてあげると親切かと。
@@ -45,8 +54,8 @@ class SafeFrame implements Context{
 	//     1.Context::actionPerformed
 	//     2.State::doXXX
 	//     3.Context::YYY
-	public function actionPerformed($actionConst){
-		switch($actionConst){
+	public function actionPerformed($action){
+		switch($action){
 			case(self::do_use):
 				$this->state->doUse($this);
 				break;
@@ -109,7 +118,7 @@ class DayState implements State{
 		//シングルトン
 		static $instance;
 		if(!isset($instance)){
-			$instance = new DayState();//TODO ここ自分のクラス名で取って、コピペできるようにすること。
+			$instance = new DayState();
 		}
 		return $instance;
 	}
@@ -137,7 +146,6 @@ class DayState implements State{
 	public function doPhone(Context $context){
 		$context->callSecurityCenter(self::phoneMessage);
 	}
-	
 }
 
 class NightState implements State{
