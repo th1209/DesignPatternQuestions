@@ -1,40 +1,6 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//テスト用ルーチン
-$gamer = new Gamer(100);
-$memento = $gamer->createMemento();
-
-for($i=1; $i <= 100 ; $i++){
-	echo $i . '回目' .PHP_EOL;
-	
-	$money = $gamer->getMoney();
-	$gamer->bet();
-	
-	if($gamer->getMoney() > $money){
-		$memento = $gamer->createMemento();
-		
-		echo 'Mementoを作成しました' . PHP_EOL;
-		printGamerState($gamer);
-	}
-	
-	if($gamer->getMoney() <= ($memento->getMoney() / 2)){
-		echo 'MementoでGamerを復元しました' . PHP_EOL;
-		printGamerState($gamer);
-	}
-}	
-	
-function printGamerState(Gamer $gamer){
-	echo '所持金:' . $gamer->getMoney() . '円' . PHP_EOL;
-	echo 'フルーツ:' ; 
-	foreach($gamer->getFruits() as $fruit){ 
-		echo $fruit . ' ';
-	} 
-	echo PHP_EOL;
-	echo PHP_EOL;
-}
-
-
 //クラス定義
 class Memento{
 	private $money;
@@ -105,4 +71,37 @@ class Gamer extends Memento{
 		$this->money = $this->memento->getMoney();
 		$this->fruits = $this->memento->getFruits();
 	}
+}
+
+//テスト用ルーチン
+$gamer = new Gamer(100);
+$memento = $gamer->createMemento();
+
+for($i=1; $i <= 100 ; $i++){
+	echo $i . '回目' .PHP_EOL;
+
+	$money = $gamer->getMoney();
+	$gamer->bet();
+
+	if($gamer->getMoney() > $money){
+		$memento = $gamer->createMemento();
+
+		echo 'Mementoを作成しました' . PHP_EOL;
+		printGamerState($gamer);
+	}
+
+	if($gamer->getMoney() <= ($memento->getMoney() / 2)){
+		echo 'MementoでGamerを復元しました' . PHP_EOL;
+		printGamerState($gamer);
+	}
+}
+
+function printGamerState(Gamer $gamer){
+	echo '所持金:' . $gamer->getMoney() . '円' . PHP_EOL;
+	echo 'フルーツ:' ;
+	foreach($gamer->getFruits() as $fruit){
+		echo $fruit . ' ';
+	}
+	echo PHP_EOL;
+	echo PHP_EOL;
 }

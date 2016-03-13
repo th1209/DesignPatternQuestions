@@ -15,7 +15,7 @@
 ###### 参考  
 各パターンの問題は、以下より抜粋。
 
-*『Javaで学ぶデザインパターン入門』 結城浩 SoftBankCreative  
+*結城浩 (2004)『Javaで学ぶデザインパターン入門』  SoftBankCreative  
 以下パターン
 Bridge
 ChainOfResponsibility
@@ -25,6 +25,7 @@ State
 
 
 以下パターンは作成まだ
+http://www.techscore.com/tech/DesignPattern/Command.html/
 Command
 Decorator
 Mediator
