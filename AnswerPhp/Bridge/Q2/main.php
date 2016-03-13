@@ -1,12 +1,6 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//テストルーチン
-$stringDisplayImpl = new StringDisplayImpl('hoge');
-$randomDisplay = new randomDisplay($stringDisplayImpl);
-$randomDisplay->randomDisplay(5);
-$randomDisplay->randomDisplay(5);
-
 //クラス定義
 class Display{
 	private $displayImpl;
@@ -101,3 +95,9 @@ class StringDisplayImpl extends DisplayImpl{
 		echo PHP_EOL;
 	}
 }
+
+//テストルーチン
+$stringDisplayImpl = new StringDisplayImpl('hoge');
+$randomDisplay = new randomDisplay($stringDisplayImpl);
+$randomDisplay->randomDisplay(5);
+$randomDisplay->randomDisplay(5);

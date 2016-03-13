@@ -1,11 +1,6 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//テストルーチン
-$patternDisplayImpl = new PatternDisplayImpl('<','*','>');
-$increseDisplay = new IncreseDisplay($patternDisplayImpl);
-$increseDisplay->increseDisplay(3);
-
 //クラス定義
 class Display{
 	private $displayImpl;
@@ -158,3 +153,8 @@ class PatternDisplayImpl extends DisplayImpl{
 		echo PHP_EOL;
 	}
 }
+
+//テストルーチン
+$patternDisplayImpl = new PatternDisplayImpl('<','*','>');
+$increseDisplay = new IncreseDisplay($patternDisplayImpl);
+$increseDisplay->increseDisplay(3);

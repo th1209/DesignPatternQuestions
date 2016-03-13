@@ -1,24 +1,6 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//以下、メインルーチン
-//部署毎にファイルを保存しているイメージ
-$rootDir = new Directory('root');
-
-$generalAccountingDir = new Directory('generalAccounting');
-$rootDir->add($generalAccountingDir);
-
-$gaDir1 = new Directory('gaDir1');
-$generalAccountingDir->add($gaDir1);
-
-$gaFile1 = new File('gaFile1', 1024);
-$gaDir1->add($gaFile1);
-
-
-echo $gaFile1->getFullPath();
-//var_dump($enFile1->getParent());
-
-
 abstract class Entry{
 	protected $name;
 	protected $parent;
@@ -112,4 +94,19 @@ class Directory extends Entry{
 		}
 	}
 }
+
+//以下、メインルーチン
+//部署毎にファイルを保存しているイメージ
+$rootDir = new Directory('root');
+
+$generalAccountingDir = new Directory('generalAccounting');
+$rootDir->add($generalAccountingDir);
+
+$gaDir1 = new Directory('gaDir1');
+$generalAccountingDir->add($gaDir1);
+
+$gaFile1 = new File('gaFile1', 1024);
+$gaDir1->add($gaFile1);
+
+echo $gaFile1->getFullPath();
 

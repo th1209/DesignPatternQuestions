@@ -1,11 +1,6 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//テストルーチン
-$fileDisplayImpl = new FileDisplayImpl('./sample.txt');
-$display = new Display($fileDisplayImpl);
-$display->display();
-
 //クラス定義
 class Display{
 	private $displayImpl;
@@ -121,3 +116,8 @@ class FileDisplayImpl extends DisplayImpl{
 		fclose($this->handle);
 	}
 }
+
+//テストルーチン
+$fileDisplayImpl = new FileDisplayImpl('./sample.txt');
+$display = new Display($fileDisplayImpl);
+$display->display();

@@ -1,12 +1,6 @@
 <?php
 namespace MyDesignPattern\Practice01;
 
-//テストルーチン
-$stringDisplayImpl = new StringDisplayImpl('hoge');
-$countDisplay = new CountDisplay($stringDisplayImpl);
-$countDisplay->display();
-$countDisplay->multiDisplay(3);
-
 //クラス定義
 class Display{
 	private $displayImpl;
@@ -86,3 +80,9 @@ class StringDisplayImpl extends DisplayImpl{
 		echo PHP_EOL;
 	}
 }
+
+//テストルーチン
+$stringDisplayImpl = new StringDisplayImpl('hoge');
+$countDisplay = new CountDisplay($stringDisplayImpl);
+$countDisplay->display();
+$countDisplay->multiDisplay(3);

@@ -1,20 +1,5 @@
 <?php
 namespace MyDesignPattern\Practice01;
-//テストルーチン
-$limit     = new LimitSupport('リミットさん',50);
-$odd       = new OddSupport('キスーさん');
-$special   = new SpecialSupport('スペシャルさん',77);
-$noSupport = new Nosupport('ムノーさん');
-
-$special->setNext($odd)->setNext($noSupport)->setNext($limit);
-
-for($i =0; $i < 100; $i++){
-	$trouble= new Trouble(rand(1,100));
-	$special->support($trouble);
-}
-
-
-
 
 //クラス定義
 class Trouble{
@@ -104,4 +89,17 @@ class NoSupport extends Support{
 	public function resolve (Trouble $trouble){
 		return false;
 	}
+}
+
+//テストルーチン
+$limit     = new LimitSupport('リミットさん',50);
+$odd       = new OddSupport('キスーさん');
+$special   = new SpecialSupport('スペシャルさん',77);
+$noSupport = new Nosupport('ムノーさん');
+
+$special->setNext($odd)->setNext($noSupport)->setNext($limit);
+
+for($i =0; $i < 100; $i++){
+	$trouble= new Trouble(rand(1,100));
+	$special->support($trouble);
 }
